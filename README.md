@@ -81,7 +81,11 @@ When you click an incident:
 
 ## Deployment
 
-Targets Firebase Hosting Spark plan (free) on `kyle-sandbox24`:
+**Live: https://kyle-sandbox24.web.app**
+
+Pushing to `main` triggers `.github/workflows/deploy.yml`: checkout → `npm ci` → typecheck → build → Firebase deploy. End-to-end in ~50s. CI auths to Firebase via a dedicated service account (`github-actions-deploy@kyle-sandbox24.iam.gserviceaccount.com`, `firebasehosting.admin` + `serviceUsageConsumer`) whose JSON key lives only in the GitHub secret `FIREBASE_SERVICE_ACCOUNT_KYLE_SANDBOX24`. The FIRMS map key is also a repo secret (`VITE_FIRMS_MAP_KEY`) injected at build time.
+
+To deploy manually from a local machine instead:
 
 ```bash
 npm run build
@@ -89,7 +93,7 @@ npx firebase-tools login           # one-time, opens browser
 npx firebase-tools deploy          # publishes dist/ to {project}.web.app
 ```
 
-`firebase.json` configures SPA rewrites and aggressive caching for hashed assets. No billing required.
+`firebase.json` configures SPA rewrites and aggressive caching for hashed assets. No billing required — Firebase Hosting Spark plan stays under quota for any realistic personal use.
 
 ## Limitations / Phase 2 ideas
 
