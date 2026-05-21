@@ -1,0 +1,129 @@
+:root {
+  /* Surfaces */
+  --bg: #0a0a0b;
+  --bg-elevated: #131318;
+  --bg-glass: rgba(19, 19, 24, 0.72);
+  --border: #24242c;
+  --border-strong: #38384a;
+
+  /* Type */
+  --text: #f5f0e8;
+  --text-dim: #9a9590;
+  --text-muted: #5a5752;
+  --text-faint: #38362f;
+
+  /* Fire palette — the ONLY saturated colors */
+  --fire-cold: #ff6b1a;
+  --fire-warm: #ff9933;
+  --fire-hot: #ffcc00;
+  --fire-incandescent: #fff4a3;
+  --fire-perimeter: #e63946;
+  --fire-contained: #8a6650;
+
+  /* Alerts */
+  --alert: #ff1a4d;
+  --alert-dim: rgba(255, 26, 77, 0.18);
+
+  /* Atmospheric */
+  --wind: #8fb3ff;
+
+  /* Typography */
+  --font-display: 'Fraunces Variable', 'Fraunces', Georgia, serif;
+  --font-body: 'Geist Variable', 'Geist', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+#root {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+/* Editorial display style */
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variation-settings: 'opsz' 144, 'SOFT' 0, 'WONK' 0;
+}
+
+.display-italic {
+  font-style: italic;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-feature-settings: 'zero', 'ss01';
+  font-variant-numeric: tabular-nums;
+}
+
+/* MapLibre overrides — dim the chrome */
+.maplibregl-ctrl-attrib {
+  background: rgba(10, 10, 11, 0.7) !important;
+  color: var(--text-muted) !important;
+  font-family: var(--font-body) !important;
+  font-size: 10px !important;
+  letter-spacing: 0.04em;
+}
+.maplibregl-ctrl-attrib a {
+  color: var(--text-dim) !important;
+}
+.maplibregl-canvas:focus { outline: none; }
+
+/* Scrollbars (slim, dim) */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Subtle grain overlay — atmosphere */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/></svg>");
+}
+
+/* Selection */
+::selection { background: var(--fire-cold); color: var(--bg); }
